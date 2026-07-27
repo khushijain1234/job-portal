@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.sites',
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     'taggit',
     'user_visit',
     'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -192,6 +192,10 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
+# django-cloudinary-storage's collectstatic command still reads the legacy
+# STATICFILES_STORAGE attribute (removed from Django's own defaults in 5.1+),
+# so it must be set explicitly to match STORAGES["staticfiles"]["BACKEND"] above.
+STATICFILES_STORAGE = STORAGES["staticfiles"]["BACKEND"]
 
 # Security hardening toggles (typically overridden in production.py)
 SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=False)
